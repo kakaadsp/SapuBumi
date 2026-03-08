@@ -1,0 +1,355 @@
+@import "tailwindcss";
+
+/* ===== Custom Theme ===== */
+@theme {
+  --color-dark-900: #060b14;
+  --color-dark-800: #0d1524;
+  --color-dark-700: #131d30;
+  --color-dark-card: rgba(13, 21, 36, 0.5);
+  --color-neon-green: #00ff9d;
+  --color-neon-blue: #00e5ff;
+  --color-neon-red: #ff0055;
+  --color-neon-yellow: #ffea00;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "Space Mono", monospace;
+
+  --animate-spin-slow: spin 8s linear infinite;
+  --animate-pulse-glow: pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-scan: scanBar 2s ease-in-out infinite;
+  --animate-sweep: sweep 2s linear infinite;
+  --animate-blink: blink 2s infinite;
+
+  @keyframes pulseGlow {
+
+    0%,
+    100% {
+      opacity: 1;
+      box-shadow: 0 0 15px rgba(0, 255, 157, 0.5);
+    }
+
+    50% {
+      opacity: .5;
+      box-shadow: 0 0 5px rgba(0, 255, 157, 0.2);
+    }
+  }
+
+  @keyframes scanBar {
+    0% {
+      top: 0%;
+    }
+
+    50% {
+      top: 100%;
+    }
+
+    100% {
+      top: 0%;
+    }
+  }
+
+  @keyframes sweep {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scale(1.5);
+    }
+  }
+}
+
+/* ===== Base ===== */
+body {
+  background-color: var(--color-dark-900);
+  color: #f8fafc;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background-color: var(--color-neon-green);
+  color: var(--color-dark-900);
+}
+
+/* ===== Glassmorphism ===== */
+.glass-panel {
+  background: rgba(13, 21, 36, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 255, 157, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ===== Glitch Effect ===== */
+.glitch-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text {
+  position: relative;
+  font-weight: 800;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-dark-900);
+}
+
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--color-neon-red);
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -2px;
+  text-shadow: -2px 0 var(--color-neon-blue);
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(13px, 9999px, 86px, 0);
+  }
+
+  20% {
+    clip: rect(51px, 9999px, 18px, 0);
+  }
+
+  40% {
+    clip: rect(98px, 9999px, 35px, 0);
+  }
+
+  60% {
+    clip: rect(10px, 9999px, 73px, 0);
+  }
+
+  80% {
+    clip: rect(66px, 9999px, 4px, 0);
+  }
+
+  100% {
+    clip: rect(32px, 9999px, 99px, 0);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(65px, 9999px, 100px, 0);
+  }
+
+  20% {
+    clip: rect(3px, 9999px, 42px, 0);
+  }
+
+  40% {
+    clip: rect(89px, 9999px, 21px, 0);
+  }
+
+  60% {
+    clip: rect(22px, 9999px, 56px, 0);
+  }
+
+  80% {
+    clip: rect(44px, 9999px, 7px, 0);
+  }
+
+  100% {
+    clip: rect(12px, 9999px, 88px, 0);
+  }
+}
+
+/* ===== Radar ===== */
+.radar-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
+  margin: auto;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 255, 157, 0.4);
+  background: radial-gradient(circle, rgba(0, 255, 157, 0.05) 0%, rgba(6, 11, 20, 0) 70%);
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(0, 255, 157, 0.2) inset;
+}
+
+.radar-sweep {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 1));
+  transform-origin: left center;
+  animation: sweep 2s linear infinite;
+}
+
+.radar-sweep::after {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: conic-gradient(from 90deg at 50% 50%, rgba(0, 255, 157, 0) 0deg, rgba(0, 255, 157, 0.5) 90deg, rgba(0, 255, 157, 0) 90deg);
+  transform-origin: right center;
+  transform: translateX(50%) translateY(50px) rotate(-90deg);
+}
+
+/* ===== Blips ===== */
+.blip {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--color-neon-green);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--color-neon-green), 0 0 30px var(--color-neon-green);
+  animation: blink 2s infinite;
+}
+
+.blip.danger {
+  background: var(--color-neon-red);
+  box-shadow: 0 0 15px var(--color-neon-red), 0 0 30px var(--color-neon-red);
+}
+
+/* ===== SPA Page Transitions ===== */
+.page-enter {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* ===== Active Nav ===== */
+.nav-link.active {
+  color: var(--color-neon-green);
+  text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-neon-green);
+  box-shadow: 0 0 10px var(--color-neon-green);
+}
+
+/* ===== Progress Bar ===== */
+.progress-bar {
+  transition: width 1.5s ease-out;
+}
+
+/* ===== Custom Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-dark-900);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-neon-blue);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neon-green);
+}
+
+/* ===== Leaflet Custom Styling ===== */
+.leaflet-container {
+  background: var(--color-dark-900) !important;
+  border-radius: 0.75rem;
+}
+
+.leaflet-tile {
+  filter: brightness(1.1) contrast(1.1) !important;
+}
+
+.leaflet-control-zoom a {
+  background: var(--color-dark-800) !important;
+  color: var(--color-neon-green) !important;
+  border-color: rgba(0, 255, 157, 0.3) !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--color-dark-800) !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(0, 255, 157, 0.3);
+  border-radius: 0.75rem !important;
+  box-shadow: 0 0 20px rgba(0, 255, 157, 0.2) !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--color-dark-800) !important;
+}
+
+.leaflet-popup-close-button {
+  color: var(--color-neon-green) !important;
+}
+
+/* ===== Typing Effect (Desktop) ===== */
+@media (min-width: 768px) {
+  .typing-text-md {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: .15em solid var(--color-neon-green);
+    animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+
+  to {
+    width: 100%
+  }
+}
+
+@keyframes blink-caret {
+
+  from,
+  to {
+    border-color: transparent
+  }
+
+  50% {
+    border-color: var(--color-neon-green)
+  }
+}
