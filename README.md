@@ -2,7 +2,7 @@
   <img src="frontend/src/assets/sapubumi-logo.png" alt="SapuBumi Logo" width="160" />
 </p>
 
-<h1 align="center">🌍 SapuBumi</h1>
+<h1 align="center">🌍 SAPU BUMI</h1>
 
 <p align="center">
   <b>Environmental Command Center — Sistem Pemantauan Cerdas untuk Deteksi Krisis Lingkungan Berbasis AI</b>
@@ -19,9 +19,37 @@
 
 ---
 
-## 📖 Tentang Proyek
+## � Informasi Karya
 
-**SapuBumi** adalah platform *command center* berbasis web yang memanfaatkan kecerdasan buatan (AI) untuk mendeteksi dan memantau tumpukan sampah plastik yang berpotensi menyumbat drainase dan menyebabkan banjir. Proyek ini mendukung **SDG 11** *(Kota dan Komunitas Berkelanjutan)* dan **SDG 14** *(Ekosistem Perairan)*.
+| | |
+|---|---|
+| **Judul Karya** | Sapu Bumi — Environmental Command Center |
+| **Institusi** | Universitas Pembangunan Nasional Veteran Jawa Timur |
+| **Ketua Tim** | Hanif Rasendra |
+| **Anggota 1** | Ahmad Taufik Hayaza |
+| **Anggota 2** | Kaka Dimas Soehendra Putra |
+| **Subtema** | Lingkungan dan Sosial |
+| **Link Website** | [https://sapubumi.vercel.app](https://sapubumi.vercel.app/) |
+
+---
+
+## 📖 Deskripsi Karya
+
+### Latar Belakang
+
+Indonesia menghadapi permasalahan penumpukan sampah liar yang serius, terutama di perkotaan. Tumpukan sampah plastik yang menyumbat saluran drainase menjadi salah satu penyebab utama banjir bandang. Sayangnya, sistem pelaporan konvensional masih bergantung pada laporan manual yang lambat dan tidak tervalidasi, sehingga pengerahan armada kebersihan sering kali terlambat dan tidak tepat sasaran.
+
+### Tujuan
+
+**Sapu Bumi** hadir sebagai *Environmental Command Center* berbasis kecerdasan buatan yang bertujuan untuk:
+1. **Mendeteksi** tumpukan sampah plastik secara otomatis melalui teknologi Computer Vision (YOLOv8)
+2. **Memetakan** titik-titik kritis penumpukan sampah secara real-time pada peta interaktif
+3. **Mempercepat** respons mitigasi dengan estimasi volume otomatis dan rekomendasi pengerahan armada
+4. **Memberdayakan** partisipasi publik melalui mekanisme pelaporan foto yang divalidasi AI
+
+### Alasan Pemilihan Subtema
+
+Subtema **Lingkungan dan Sosial** dipilih karena proyek ini secara langsung menjembatani dua dimensi sekaligus. Dari sisi **lingkungan**, Sapu Bumi mendeteksi dan memetakan sampah plastik yang mengancam ekosistem drainase dan perairan (mendukung **SDG 11** & **SDG 14**). Dari sisi **sosial**, platform ini mendorong partisipasi aktif masyarakat melalui mekanisme pelaporan berbasis foto, membangun kesadaran kolektif, dan membantu pemerintah daerah mengambil keputusan berbasis data untuk pengelolaan sampah yang lebih responsif dan efisien.
 
 > 🎯 **Misi:** Memetakan penumpukan sampah plastik penyebab banjir secara real-time via AI Command Center.
 
@@ -168,7 +196,7 @@ SapuBumi/
   </tr>
   <tr>
     <td><b>Deployment</b></td>
-    <td>Hugging Face Spaces (Backend), Vercel/Netlify ready (Frontend)</td>
+    <td>Vercel (Frontend), Hugging Face Spaces (Backend)</td>
   </tr>
 </table>
 
@@ -218,18 +246,6 @@ SapuBumi/
 
 ---
 
-## 🤝 Kontribusi
-
-Kontribusi sangat diterima! Silakan fork repository ini dan buat pull request.
-
-1. Fork repository
-2. Buat branch fitur (`git checkout -b fitur/fitur-baru`)
-3. Commit perubahan (`git commit -m 'Menambahkan fitur baru'`)
-4. Push ke branch (`git push origin fitur/fitur-baru`)
-5. Buat Pull Request
-
----
-
 ## 📄 Lisensi
 
 Proyek ini dibuat untuk kompetisi **Techsoft 2026**.
@@ -237,5 +253,5 @@ Proyek ini dibuat untuk kompetisi **Techsoft 2026**.
 ---
 
 <p align="center">
-  Dibuat dengan 💚 oleh <b>Tim SapuBumi</b>
+  Dibuat dengan 💚 oleh <b>Tim Sapu Bumi</b> — UPN Veteran Jawa Timur
 </p>

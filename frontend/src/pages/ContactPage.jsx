@@ -29,9 +29,9 @@ export default function ContactPage() {
                         <div>
                             <h4 className="text-white font-bold uppercase tracking-wider text-sm mb-1">Pusat Komando</h4>
                             <p className="text-xs text-gray-400 font-mono leading-relaxed">
-                                Laboratorium RPL Polindra
+                                Universitas Pembangunan Nasional Veteran Jawa Timur
                                 <br />
-                                Jl. Raya Lohbener Lama No.8, Indramayu
+                                Surabaya, Jawa Timur
                             </p>
                         </div>
                     </GlassPanel>
@@ -83,8 +83,8 @@ export default function ContactPage() {
                         <button
                             type="submit"
                             className={`w-full py-4 font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-2 ${submitted
-                                    ? 'bg-neon-green/20 text-neon-green border border-neon-green/50'
-                                    : 'bg-neon-blue/20 hover:bg-neon-blue text-neon-blue hover:text-dark-900 shadow-[0_0_15px_rgba(0,229,255,0.2)]'
+                                ? 'bg-neon-green/20 text-neon-green border border-neon-green/50'
+                                : 'bg-neon-blue/20 hover:bg-neon-blue text-neon-blue hover:text-dark-900 shadow-[0_0_15px_rgba(0,229,255,0.2)]'
                                 }`}
                         >
                             {submitted ? '✅ Transmisi Berhasil!' : (
