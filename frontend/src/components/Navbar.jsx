@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Radar, Menu, X, Home, Info, Terminal, Mail } from 'lucide-react';
+import { Menu, X, Home, Info, Terminal, Mail } from 'lucide-react';
+import sapubumiLogo from '../assets/sapubumi-logo.png';
 
 const NAV_ITEMS = [
     { path: '/', label: 'Beranda', id: 'home', icon: Home },
@@ -21,8 +22,8 @@ export default function Navbar() {
                 <div className="container mx-auto px-6 py-4 flex justify-between items-center">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-3 group" onClick={() => setMobileOpen(false)}>
-                        <div className="relative w-10 h-10 rounded-lg bg-dark-800 border border-neon-green/50 flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(0,255,157,0.3)] group-hover:shadow-[0_0_25px_rgba(0,255,157,0.6)] transition-all">
-                            <Radar className="text-neon-green w-6 h-6 animate-pulse-glow" />
+                        <div className="relative w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden group-hover:scale-110 transition-all">
+                            <img src={sapubumiLogo} alt="SapuBumi Logo" className="w-10 h-10 object-contain" />
                         </div>
                         <div className="flex flex-col">
                             <span className="text-lg font-black tracking-widest text-white leading-tight">
