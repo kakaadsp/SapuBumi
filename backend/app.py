@@ -12,33 +12,63 @@ from PIL import Image
 try:
     model = YOLO("best.pt")
     print("✅ Model AI (best.pt) berhasil dimuat!")
+    print(f"📋 Class names dalam model: {model.names}")
 except Exception as e:
     model = None
     print(f"❌ ERROR: {e}")
+
+
+def preprocess_image(img_array):
+    """Preprocess image for better detection accuracy"""
+    # Auto-resize if image is too large (improves speed & consistency)
+    h, w = img_array.shape[:2]
+    max_dim = 1280
+    if max(h, w) > max_dim:
+        scale = max_dim / max(h, w)
+        img_array = cv2.resize(img_array, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_AREA)
+
+    # Apply CLAHE contrast enhancement for better detection in varied lighting
+    lab = cv2.cvtColor(img_array, cv2.COLOR_RGB2LAB)
+    l_channel, a_channel, b_channel = cv2.split(lab)
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+    l_channel = clahe.apply(l_channel)
+    enhanced = cv2.merge([l_channel, a_channel, b_channel])
+    img_array = cv2.cvtColor(enhanced, cv2.COLOR_LAB2RGB)
+
+    return img_array
+
 
 def detect_image(img_array):
     """Shared detection logic used by both Gradio UI and REST API"""
     if model is None:
         return {"status": "error", "message": "Model not loaded"}
 
+    # Convert RGBA to RGB if needed
     if len(img_array.shape) == 3 and img_array.shape[-1] == 4:
         img_array = cv2.cvtColor(img_array, cv2.COLOR_RGBA2RGB)
 
-    results = model.predict(source=img_array, conf=0.4, verbose=False)
+    # Preprocess for better accuracy
+    img_array = preprocess_image(img_array)
+
+    # Lower confidence threshold (0.25) to catch more true positives
+    results = model.predict(source=img_array, conf=0.25, verbose=False)
 
     data_sampah = []
     for r in results:
         for box in r.boxes:
             class_id = int(box.cls[0].item())
             class_name = model.names[class_id]
-            if class_name.lower() == "garbage" or class_name == "0":
-                x1, y1, x2, y2 = box.xyxy[0].tolist()
-                confidence = round(box.conf[0].item() * 100, 1)
-                data_sampah.append({
-                    "label": "Tumpukan Sampah",
-                    "confidence": f"{confidence}%",
-                    "box": {"x1": round(x1, 2), "y1": round(y1, 2), "x2": round(x2, 2), "y2": round(y2, 2)}
-                })
+            x1, y1, x2, y2 = box.xyxy[0].tolist()
+            confidence = round(box.conf[0].item() * 100, 1)
+
+            # Accept all detected classes from the model
+            label = class_name.capitalize() if class_name != "0" else "Tumpukan Sampah"
+
+            data_sampah.append({
+                "label": label,
+                "confidence": f"{confidence}%",
+                "box": {"x1": round(x1, 2), "y1": round(y1, 2), "x2": round(x2, 2), "y2": round(y2, 2)}
+            })
 
     jumlah = len(data_sampah)
     is_valid = jumlah > 0
