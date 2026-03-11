@@ -300,6 +300,10 @@ body {
   filter: brightness(1.1) contrast(1.1) !important;
 }
 
+.leaflet-top.leaflet-left {
+  top: 50px;
+}
+
 .leaflet-control-zoom a {
   background: var(--color-dark-800) !important;
   color: var(--color-neon-green) !important;
