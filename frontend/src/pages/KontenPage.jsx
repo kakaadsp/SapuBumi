@@ -7,12 +7,17 @@ import { useReports } from '../context/ReportContext';
 
 export default function KontenPage() {
     const [activeTab, setActiveTab] = useState('radar');
+    const [selectedReport, setSelectedReport] = useState(null);
     const { reports } = useReports();
 
     const switchToRadar = useCallback(() => setActiveTab('radar'), []);
 
     const kritisCount = reports.filter((r) => r.severity === 'KRITIS').length;
     const activeCount = reports.filter((r) => r.severity !== 'SELESAI').length;
+
+    const handleLogClick = useCallback((report) => {
+        setSelectedReport(report);
+    }, []);
 
     return (
         <section className="container mx-auto px-4 sm:px-6 pt-8 page-enter">
@@ -27,8 +32,8 @@ export default function KontenPage() {
                     <button
                         onClick={() => setActiveTab('radar')}
                         className={`w-full sm:w-auto px-8 py-3 sm:py-2.5 rounded text-xs font-bold uppercase tracking-widest transition-all ${activeTab === 'radar'
-                                ? 'bg-neon-green/20 text-neon-green border border-neon-green/50 shadow-[0_0_15px_rgba(0,255,157,0.2)]'
-                                : 'text-gray-500 hover:text-white border border-transparent'
+                            ? 'bg-neon-green/20 text-neon-green border border-neon-green/50 shadow-[0_0_15px_rgba(0,255,157,0.2)]'
+                            : 'text-gray-500 hover:text-white border border-transparent'
                             }`}
                     >
                         Radar Utama
@@ -36,8 +41,8 @@ export default function KontenPage() {
                     <button
                         onClick={() => setActiveTab('lapor')}
                         className={`w-full sm:w-auto px-8 py-3 sm:py-2.5 rounded text-xs font-bold uppercase tracking-widest transition-all ${activeTab === 'lapor'
-                                ? 'bg-neon-blue/20 text-neon-blue border border-neon-blue/50 shadow-[0_0_15px_rgba(0,229,255,0.2)]'
-                                : 'text-gray-500 hover:text-white border border-transparent'
+                            ? 'bg-neon-blue/20 text-neon-blue border border-neon-blue/50 shadow-[0_0_15px_rgba(0,229,255,0.2)]'
+                            : 'text-gray-500 hover:text-white border border-transparent'
                             }`}
                     >
                         AI Scanner
@@ -74,10 +79,15 @@ export default function KontenPage() {
                                 {reports.map((report, idx) => {
                                     const isKritis = report.severity === 'KRITIS';
                                     const isSelesai = report.severity === 'SELESAI';
+                                    const isSelected = selectedReport && selectedReport.id === report.id;
                                     return (
                                         <div
                                             key={report.id}
-                                            className={`bg-dark-900/80 p-3 rounded border transition-colors cursor-pointer ${isKritis
+                                            onClick={() => handleLogClick(report)}
+                                            className={`bg-dark-900/80 p-3 rounded border transition-all cursor-pointer ${isSelected
+                                                ? 'ring-2 ring-neon-green shadow-[0_0_15px_rgba(0,255,157,0.3)] scale-[1.02]'
+                                                : ''
+                                                } ${isKritis
                                                     ? 'border-red-500/50 hover:bg-red-500/20'
                                                     : isSelesai
                                                         ? 'border-neon-green/30 hover:bg-neon-green/20'
@@ -87,17 +97,22 @@ export default function KontenPage() {
                                             <div className="flex justify-between items-start mb-2">
                                                 <span
                                                     className={`text-[9px] px-2 py-0.5 rounded font-bold tracking-widest ${isKritis
-                                                            ? 'bg-red-500 text-white'
-                                                            : isSelesai
-                                                                ? 'bg-neon-green/20 text-neon-green border border-neon-green/50'
-                                                                : 'bg-neon-blue/20 text-neon-blue border border-neon-blue/50'
+                                                        ? 'bg-red-500 text-white'
+                                                        : isSelesai
+                                                            ? 'bg-neon-green/20 text-neon-green border border-neon-green/50'
+                                                            : 'bg-neon-blue/20 text-neon-blue border border-neon-blue/50'
                                                         }`}
                                                 >
                                                     {report.severity}
                                                 </span>
-                                                {idx === 0 && (
-                                                    <span className="text-[9px] text-red-400 animate-pulse">LIVE</span>
-                                                )}
+                                                <div className="flex items-center gap-2">
+                                                    {isSelected && (
+                                                        <span className="text-[9px] text-neon-green font-bold tracking-widest">📍 FOKUS</span>
+                                                    )}
+                                                    {idx === 0 && (
+                                                        <span className="text-[9px] text-red-400 animate-pulse">LIVE</span>
+                                                    )}
+                                                </div>
                                             </div>
                                             <p className="text-[10px] text-gray-400">{report.message}</p>
                                         </div>
@@ -120,7 +135,7 @@ export default function KontenPage() {
                                 </span>
                             )}
                         </div>
-                        <InteractiveMap className="z-0" />
+                        <InteractiveMap className="z-0" selectedReport={selectedReport} />
                     </div>
                 </div>
             )}

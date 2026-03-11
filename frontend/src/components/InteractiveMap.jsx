@@ -1,4 +1,5 @@
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { useEffect, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useReports } from '../context/ReportContext';
@@ -34,7 +35,68 @@ function MapClickHandler({ onMapClick }) {
     return null;
 }
 
-export default function InteractiveMap({ onMapClick, className = '', style }) {
+// Sub-component to fly to a selected report
+function MapFlyTo({ selectedReport }) {
+    const map = useMap();
+
+    useEffect(() => {
+        if (selectedReport && selectedReport.lat && selectedReport.lng) {
+            map.flyTo([selectedReport.lat, selectedReport.lng], 17, {
+                duration: 1.2,
+            });
+        }
+    }, [selectedReport, map]);
+
+    return null;
+}
+
+// Individual marker component that can auto-open its popup
+function ReportMarker({ report, isSelected }) {
+    const markerRef = useRef(null);
+
+    useEffect(() => {
+        if (isSelected && markerRef.current) {
+            markerRef.current.openPopup();
+        }
+    }, [isSelected]);
+
+    return (
+        <Marker
+            ref={markerRef}
+            position={[report.lat, report.lng]}
+            icon={ICONS[report.severity] || ICONS.SEDANG}
+        >
+            <Popup>
+                <div className="font-mono text-xs space-y-2 min-w-[200px]">
+                    <div className="flex justify-between items-center">
+                        <span className="font-bold text-neon-green">{report.id}</span>
+                        <span
+                            className="px-2 py-0.5 rounded text-[9px] font-bold"
+                            style={{
+                                background:
+                                    report.severity === 'KRITIS'
+                                        ? 'rgba(255,0,85,0.8)'
+                                        : report.severity === 'SEDANG'
+                                            ? 'rgba(0,229,255,0.3)'
+                                            : 'rgba(0,255,157,0.3)',
+                                color: '#fff',
+                            }}
+                        >
+                            {report.severity}
+                        </span>
+                    </div>
+                    <p className="text-gray-300 text-[11px]">{report.message}</p>
+                    <div className="flex justify-between text-[9px] text-gray-400 border-t border-white/10 pt-1">
+                        <span>Vol: {report.volume}</span>
+                        <span>{new Date(report.timestamp).toLocaleTimeString('id-ID')}</span>
+                    </div>
+                </div>
+            </Popup>
+        </Marker>
+    );
+}
+
+export default function InteractiveMap({ onMapClick, selectedReport, className = '', style }) {
     const { reports } = useReports();
 
     // Center on Indramayu area
@@ -54,40 +116,14 @@ export default function InteractiveMap({ onMapClick, className = '', style }) {
             />
 
             <MapClickHandler onMapClick={onMapClick} />
+            <MapFlyTo selectedReport={selectedReport} />
 
             {reports.map((report) => (
-                <Marker
+                <ReportMarker
                     key={report.id}
-                    position={[report.lat, report.lng]}
-                    icon={ICONS[report.severity] || ICONS.SEDANG}
-                >
-                    <Popup>
-                        <div className="font-mono text-xs space-y-2 min-w-[200px]">
-                            <div className="flex justify-between items-center">
-                                <span className="font-bold text-neon-green">{report.id}</span>
-                                <span
-                                    className="px-2 py-0.5 rounded text-[9px] font-bold"
-                                    style={{
-                                        background:
-                                            report.severity === 'KRITIS'
-                                                ? 'rgba(255,0,85,0.8)'
-                                                : report.severity === 'SEDANG'
-                                                    ? 'rgba(0,229,255,0.3)'
-                                                    : 'rgba(0,255,157,0.3)',
-                                        color: '#fff',
-                                    }}
-                                >
-                                    {report.severity}
-                                </span>
-                            </div>
-                            <p className="text-gray-300 text-[11px]">{report.message}</p>
-                            <div className="flex justify-between text-[9px] text-gray-400 border-t border-white/10 pt-1">
-                                <span>Vol: {report.volume}</span>
-                                <span>{new Date(report.timestamp).toLocaleTimeString('id-ID')}</span>
-                            </div>
-                        </div>
-                    </Popup>
-                </Marker>
+                    report={report}
+                    isSelected={selectedReport && selectedReport.id === report.id}
+                />
             ))}
         </MapContainer>
     );

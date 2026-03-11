@@ -2,6 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 import { ScanLine, Loader, Siren, Cpu, SatelliteDish, Check, X, Info, MapPin } from 'lucide-react';
 import GlassPanel from './GlassPanel';
 import { useReports } from '../context/ReportContext';
+import guideDianjurkan from '../assets/guide-dianjurkan.png';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -147,7 +148,7 @@ export default function AIScanner({ onTransmitSuccess }) {
                     <div className="grid md:grid-cols-2 gap-4">
                         <div className="bg-dark-800 border border-neon-green/30 rounded-lg p-3 flex gap-4 items-start">
                             <div className="w-24 h-16 shrink-0 rounded overflow-hidden relative border border-neon-green/50">
-                                <img src="https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?q=80&w=200&auto=format&fit=crop" className="w-full h-full object-cover" alt="Benar" />
+                                <img src={guideDianjurkan} className="w-full h-full object-cover" alt="Benar" />
                                 <div className="absolute top-1 right-1 w-4 h-4 bg-neon-green rounded-full flex items-center justify-center">
                                     <Check className="w-3 h-3 text-dark-900" />
                                 </div>
@@ -334,8 +335,8 @@ export default function AIScanner({ onTransmitSuccess }) {
                                             onClick={handleTransmit}
                                             disabled={transmitting || transmitted}
                                             className={`w-full mt-6 py-4 font-bold uppercase tracking-widest text-[10px] rounded transition-all flex items-center justify-center gap-2 ${transmitted
-                                                    ? 'bg-neon-green/20 text-neon-green border border-neon-green/50 cursor-default'
-                                                    : 'bg-neon-green hover:bg-white text-dark-900 shadow-[0_0_20px_rgba(0,255,157,0.4)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)]'
+                                                ? 'bg-neon-green/20 text-neon-green border border-neon-green/50 cursor-default'
+                                                : 'bg-neon-green hover:bg-white text-dark-900 shadow-[0_0_20px_rgba(0,255,157,0.4)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)]'
                                                 }`}
                                         >
                                             {transmitting ? (
