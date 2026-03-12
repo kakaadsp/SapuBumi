@@ -28,7 +28,7 @@ export default function HomePage() {
                     </div>
 
                     {/* Typing text */}
-                    <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-lg leading-relaxed border-l-2 border-neon-green pl-4 font-mono typing-text-md border-transparent mx-auto lg:mx-0 text-left">
+                    <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-lg leading-relaxed border-l-2 border-neon-green pl-4 font-mono border-transparent mx-auto lg:mx-0 text-left">
                         Memetakan penumpukan sampah plastik penyebab banjir secara real-time via AI Command Center.
                     </p>
 
